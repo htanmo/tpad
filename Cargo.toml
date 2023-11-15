@@ -1,0 +1,16 @@
+[package]
+name = "tpad"
+version = "0.1.0"
+authors = ["Omnath Mandal"]
+edition = "2021"
+license = "GPL-3.0-only"
+description = "Simple cli todo utility for productivity"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+
+[[bin]]
+name = "tpad"
+path = "src/main.rs"
