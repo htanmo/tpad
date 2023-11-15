@@ -8,7 +8,7 @@ use std::{
 };
 
 pub const HELP: &'static str = "Usage: tpad [COMMAND] [ARGUMENTS]
-Taskpad or tpad is a command line todo utility for productivity.
+Taskpad or tpad is a command line todo utility for comfort.
 
 Example: tpad list
 

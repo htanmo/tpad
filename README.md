@@ -25,7 +25,7 @@ cargo build --release
 
 ```text
 Usage: tpad [COMMAND] [ARGUMENTS]
-Taskpad or tpad is a command line todo utility for productivity.
+Taskpad or tpad is a command line todo utility for comfort.
 
 Example: tpad list
 
