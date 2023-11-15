@@ -7,6 +7,7 @@ Taskpad or tpad is a cli todo utility implemented in rust which makes rememberin
 To configure this project, you can set the following environment variables :
 
 `TASKPAD`: Path to directory where you want to store your `.tpad` file
+
 `TASKPAD_BACKUP`: Path to directory where you want to store your `.tpad.bak` file
 
 ## Note
