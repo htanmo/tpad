@@ -12,7 +12,7 @@ To configure this project, you can set the following environment variables :
 
 ## Note
 
-- In case of a `.tpad` file being present in the cwd `tpad` will read todos from the same file, even if `TASKPAD` env varible is set.
+- In case of a `.tpad` file being present in the current working directory `tpad` will read todos from the local file, even if `TASKPAD` env variable is set.
 - Binary for the compiled project can be found under `./target/release/` with the binary name as `tpad` with os specific executable extension.
 
 ## How to build
@@ -56,4 +56,4 @@ Available commands:
 ```
 
 ## LICENSE
-#### [GPL-3.0 license](./COPYING)
+### [GPL-3.0](./COPYING)
