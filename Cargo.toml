@@ -1,6 +1,6 @@
 [package]
 name = "tpad"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Omnath Mandal"]
 edition = "2021"
 license = "GPL-3.0-only"
@@ -10,6 +10,7 @@ description = "Simple command line todo utility for comfort"
 
 [dependencies]
 directories = "5.0.1"
+indexmap = "2.1.0"
 
 
 [[bin]]

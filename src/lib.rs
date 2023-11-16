@@ -1,4 +1,5 @@
 use directories::BaseDirs;
+use indexmap::IndexSet;
 use std::{
     collections::HashMap,
     env,
@@ -128,7 +129,9 @@ impl Task {
             .read_to_string(&mut contents)
             .expect("failed to read to string");
 
-        let todo: Vec<String> = contents.lines().map(str::to_string).collect();
+        let todo: IndexSet<String> =
+            contents.lines().map(str::to_string).collect();
+        let todo = Vec::from_iter(todo.into_iter());
 
         Self { todo, todo_path, backed_up, backup_path }
     }
