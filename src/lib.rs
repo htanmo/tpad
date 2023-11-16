@@ -1,9 +1,10 @@
+use directories::BaseDirs;
 use std::{
     collections::HashMap,
     env,
     fs::{self, File, OpenOptions},
     io::{self, prelude::*, BufReader, BufWriter},
-    path::Path,
+    path::{Path, PathBuf},
     process,
 };
 
@@ -48,33 +49,67 @@ pub struct Task {
 
 impl Task {
     pub fn new() -> Self {
+        let dir = match BaseDirs::new() {
+            Some(dir) => dir,
+            None => {
+                eprintln!("failed to create dir object!");
+                process::exit(1);
+            }
+        };
+
+        // path to home directory
+        let home_dir_path = dir.home_dir().to_path_buf();
+
         let path = Path::new("./.tpad");
         let todo_path = if path.exists() {
             path.display().to_string()
         } else {
             match env::var("TASKPAD") {
                 Ok(value) => {
-                    let mut path = value;
-                    path.push_str(".tpad");
-                    path
+                    let mut path = PathBuf::from(value);
+                    if path.is_dir() {
+                        path.push(".tpad");
+                        path.display().to_string()
+                    } else {
+                        let mut path = home_dir_path.clone();
+                        path.push(".tpad");
+                        path.display().to_string()
+                    }
                 }
-                Err(_) => "/tmp/.tpad".to_string(),
+                Err(_) => {
+                    let mut path = dir.home_dir().to_path_buf();
+                    path.push(".tpad");
+                    path.display().to_string()
+                }
             }
         };
 
-        let path = Path::new("/tmp/.tpad.bak");
-        let mut backed_up: bool = false;
-        let backup_path = if path.exists() {
-            backed_up = true;
-            path.display().to_string()
-        } else {
-            match env::var("TASKPAD_BACKUP") {
-                Ok(value) => {
-                    let mut path = value;
-                    path.push_str(".tpad.bak");
-                    path
+        let mut backed_up = false;
+        let backup_path = match env::var("TASKPAD_BACKUP") {
+            Ok(value) => {
+                let mut path = PathBuf::from(value);
+                if path.is_dir() {
+                    path.push(".tpad.bak");
+                    if path.exists() {
+                        backed_up = true;
+                    }
+                    path.display().to_string()
+                } else {
+                    let mut path = home_dir_path.clone();
+                    path.push(".tpad.bak");
+                    if path.exists() {
+                        backed_up = true;
+                    }
+                    path.display().to_string()
                 }
-                Err(_) => "/tmp/.tpad.bak".to_string(),
+            }
+            Err(_) => {
+                let mut path = home_dir_path.clone();
+                path.push(".tpad.bak");
+                if path.exists() {
+                    backed_up = true;
+                }
+                path.display().to_string()
             }
         };
 

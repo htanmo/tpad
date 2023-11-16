@@ -6,20 +6,23 @@ Taskpad or tpad is a cli todo utility implemented in rust which makes rememberin
 
 To configure this project, you can set the following environment variables :
 
-`TASKPAD`: Path to directory where you want to store your `.tpad` file
+- `TASKPAD` : Path to directory where you want to store your `.tpad` file
 
-`TASKPAD_BACKUP`: Path to directory where you want to store your `.tpad.bak` file
+- `TASKPAD_BACKUP` : Path to directory where you want to store your `.tpad.bak` file
 
 ## Note
 
 - In case of a `.tpad` file being present in the current working directory `tpad` will read todos from the local file, even if `TASKPAD` env variable is set.
-- Binary for the compiled project can be found under `./target/release/` with the binary name as `tpad` with os specific executable extension.
+
+- Default path for both `.tpad` and `.tpad.bak` file is `$HOME/<filename>` ($HOME is path to home directory which is OS specific).
 
 ## How to build
 
 ```sh
 cargo build --release
 ```
+
+> the executable can be found under `./target/release/` with the binary name as `tpad` with OS speccific extension.
 
 ## Usage/Examples
 
