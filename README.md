@@ -14,7 +14,7 @@ To configure this project, you can set the following environment variables :
 
 - In case of a `.tpad` file being present in the current working directory `tpad` will read todos from the local file, even if `TASKPAD` env variable is set.
 
-- Default path for both `.tpad` and `.tpad.bak` file is `$HOME/<filename>` ($HOME is path to home directory which is OS specific).
+- Default path for both `.tpad` and `.tpad.bak` file is OS specific `HOME` directory.
 
 ## How to build
 
