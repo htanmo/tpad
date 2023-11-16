@@ -1,6 +1,6 @@
 # Taskpad
 
-Taskpad or tpad is a cli todo utility implemented in rust which makes remembering things hassle free with the comfort of one's terminal.
+Taskpad or tpad is a cross platform command line todo utility implemented in rust which makes remembering things hassle free with the comfort of one's terminal.
 
 ## Environment Variables
 
