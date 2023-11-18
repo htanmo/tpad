@@ -16,13 +16,19 @@ To configure this project, you can set the following environment variables :
 
 - Default path for both `.tpad` and `.tpad.bak` file is OS specific `HOME` directory.
 
+## How to install
+
+```sh
+cargo install --path . --locked
+```
+
 ## How to build
 
 ```sh
 cargo build --release
 ```
 
-> the executable can be found under `./target/release/` with the binary name as `tpad` with OS speccific extension.
+> the executable can be found under `./target/release/` with the binary name as `tpad` with OS specific extension.
 
 ## Usage/Examples
 
@@ -58,5 +64,3 @@ Available commands:
         restore recent backup after reset
 ```
 
-## LICENSE
-### [GPL-3.0](./COPYING)
