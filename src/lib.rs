@@ -1,3 +1,4 @@
+use colored::Colorize;
 use directories::BaseDirs;
 use indexmap::IndexSet;
 use std::{
@@ -53,7 +54,7 @@ impl Task {
         let dir = match BaseDirs::new() {
             Some(dir) => dir,
             None => {
-                eprintln!("failed to create dir object!");
+                eprintln!("{}", "failed to create dir object!".red());
                 process::exit(1);
             }
         };
@@ -119,7 +120,7 @@ impl Task {
             .write(true)
             .create(true)
             .open(&todo_path)
-            .expect("failed to open todo file");
+            .expect("failed to open todo file!");
 
         let mut buf_reader = BufReader::new(todofile);
 
@@ -127,7 +128,7 @@ impl Task {
 
         buf_reader
             .read_to_string(&mut contents)
-            .expect("failed to read to string");
+            .expect("failed to read to string!");
 
         let todo: IndexSet<String> =
             contents.lines().map(str::to_string).collect();
@@ -141,13 +142,13 @@ impl Task {
         if !path.exists() {
             File::create(path).expect("failed to create .tpad file");
         } else {
-            eprintln!(".tpad file already exists!");
+            eprintln!("{}", ".tpad file already exists!".red());
         }
     }
 
     pub fn add(&self, args: &[String]) {
         if args.len() == 0 {
-            eprintln!("tpad takes atleast one arguement");
+            eprintln!("{}", "tpad takes atleast one argument!".red());
             process::exit(1);
         }
 
@@ -156,7 +157,7 @@ impl Task {
             .append(true)
             .create(true)
             .open(&self.todo_path)
-            .expect("failed to open file");
+            .expect("failed to open file!");
 
         let mut bufwriter = BufWriter::new(file);
 
@@ -176,9 +177,21 @@ impl Task {
 
         for (index, todo) in self.todo.iter().enumerate() {
             if todo.len() > 4 {
-                let status = &todo[..4];
+                let status: String;
+                let task: String;
+                match &todo[..4] {
+                    "[ ] " => {
+                        status = "[ ] ".to_string();
+                        task = format!("{}", &todo[4..]);
+                    }
+                    "[*] " => {
+                        status = format!("[{}] ", "*".red());
+                        task =
+                            format!("{}", &todo[4..].strikethrough().dimmed());
+                    }
+                    _ => unreachable!(),
+                }
                 let idx = index + 1;
-                let task = &todo[4..];
                 let line = format!("{}{}. {}\n", status, idx, task);
                 bufwriter
                     .write_all(line.as_bytes())
@@ -189,7 +202,7 @@ impl Task {
 
     pub fn done(&mut self, index: &[String]) {
         if index.is_empty() {
-            eprintln!("tpad done takes atleast one arguement!");
+            eprintln!("{}", "tpad done takes atleast one argument!".red());
             process::exit(1);
         }
 
@@ -202,7 +215,7 @@ impl Task {
             .map(|x| match x.trim().parse::<usize>() {
                 Ok(v) => v - 1,
                 Err(_) => {
-                    eprintln!("{} not a valid index!", x);
+                    eprintln!("{} {}", x.red(), "not a valid index!".red());
                     process::exit(1);
                 }
             })
@@ -233,7 +246,7 @@ impl Task {
 
     pub fn undo(&mut self, index: &[String]) {
         if index.is_empty() {
-            eprintln!("tpad undo takes atleast one arguement!");
+            eprintln!("{}", "tpad undo takes atleast one argument!".red());
             process::exit(1);
         }
 
@@ -246,7 +259,7 @@ impl Task {
             .map(|x| match x.trim().parse::<usize>() {
                 Ok(v) => v - 1,
                 Err(_) => {
-                    eprintln!("{} not a valid index!", x);
+                    eprintln!("{} {}", x.red(), "not a valid index!".red());
                     process::exit(1);
                 }
             })
@@ -277,7 +290,7 @@ impl Task {
 
     pub fn remove(&mut self, index: &[String]) {
         if index.is_empty() {
-            eprintln!("tpad rm takes atleast one arguement!");
+            eprintln!("{}", "tpad rm takes atleast one arguement!".red());
             process::exit(1);
         }
 
@@ -304,7 +317,11 @@ impl Task {
                 .map(|x| match x.trim().parse::<usize>() {
                     Ok(v) => v - 1,
                     Err(_) => {
-                        eprintln!("{} is not a valid index!", x);
+                        eprintln!(
+                            "{} {}",
+                            x.red(),
+                            "is not a valid index!".red()
+                        );
                         process::exit(1);
                     }
                 })
