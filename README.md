@@ -64,3 +64,4 @@ Available commands:
         restore recent backup after reset
 ```
 
+### [LICENSE](./COPYING)
